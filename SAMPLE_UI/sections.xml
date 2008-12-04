@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sections>
+  <section>
+    <id>file:categories:report</id>
+    <name>Report</name>	
+    <description>
+      Breve descrição, em LaTeX, do trabalho desenvolvido pelo grupo.
+      Por favor use o modelo fornecido na página.
+    </description>
+  </section>
+  <section>
+    <id>file:categories:sourcecode</id>
+    <name>Code</name>
+    <description>Código fonte da vossa aplicação.</description>
+  </section>
+  <section>
+    <id>file:categories:presentation</id>
+    <name>Presentation</name>
+    <description>Ficheiros usados durante a apresentação</description>
+  </section>
+  <section>
+    <id>file:categories:miscellaneous</id>
+    <name>Miscellaneous</name>
+    <description>
+      Outro material necessário para o normal funcionamento da vossa aplicação.
+    </description>
+  </section>
+</sections>

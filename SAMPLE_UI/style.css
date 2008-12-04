@@ -1,0 +1,142 @@
+@namespace xforms url("http://www.w3.org/2002/xforms");
+@namespace xhtml url("http://www.w3.org/1999/xhtml");
+xhtml|body {
+	font-size: 10pt;
+	font-family: Monaco, Geneva, Arial, Helvetica, sans-serif;
+}
+
+xhtml|hr {
+	border: 1px solid #ccc;
+}
+.form {
+	margin: 0 auto;
+    padding: 0 5em 0.5em 5em;;
+	width: 40em;
+	color: #000;
+	background-color: #f0f0f0;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #ccc;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+.footer {
+	text-align: right;
+	margin: 0 auto;
+    padding: 0 5em 0.5em 5em;;
+	width: 40em;
+}
+
+.container {
+	margin: 0.1em 0.1em 0.1em 0.1em;
+}
+
+.submit {
+	margin-left: 22em;
+}
+
+xforms|group {
+	margin-left: -4em;
+	margin-top: -1px;
+}
+
+xforms|repeat {
+	margin: 0.5em 0.0em 0.5em 0.0em;
+	text-align: center;
+}
+
+xforms|trigger button,  xforms|submit button, xforms|upload button {
+	background-color: #fff;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #eee #ccc #ccc #ccc;
+	border-radius: 0 0 2px 2px;
+	-moz-border-radius: 0 0 2px 2px;
+}
+
+
+xforms|upload button {
+	margin-left:0.1em;
+	margin-top:1px;
+}
+
+xforms|input, xforms|secret, xforms|select1, xforms|upload {
+	position: relative;
+	display: block;
+	text-align:center;
+	width: 100%;
+	height: 2em;
+	border:1px solid #eee; border-width:1px 0;
+	margin:0 0 0.1em 0;
+
+}
+
+xforms|input:invalid {
+	/*background:url(icons/error.png) no-repeat left top;*/
+	background:	#FFFCDF	url(img/bg_error.png);
+	color: firebrick;
+	font-weight: bold;
+	border-color: #df7d7d;
+}
+
+xforms|input:invalid input {
+	border-color: #df7d7d;
+}
+
+xforms|input xforms|label, xforms|secret xforms|label, xforms|select1 xforms|label, xforms|upload xforms|label {
+	display: block;
+	width: 10em;
+	padding-top: 0.3em;
+	text-align: right;
+}
+
+xforms|input input, xforms|secret input, xforms|upload input, xforms|select1 .value, xforms|select1 .xf-value {
+	background:url(icons/bullet_blue.png) no-repeat left top;
+	position: absolute;
+	left: 12em;
+	top: 0.25em;
+	width: 31.4em;
+	height: 1.2em;
+	padding-left: 1.4em;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #ccc #ccc #ccc #ccc;
+	border-radius: 2px 2px 2px 2px;
+	-moz-border-radius: 2px 2px 2px 2px;
+}
+
+xforms|select1 .value, xforms|select1 .xf-value{
+	height:1.5em;
+	overflow:hidden hidden;
+}
+xforms|submit {
+	text-align: right;
+}
+
+xforms|output {
+	font-weight: bold;
+	color: grey;
+}
+
+/*
+xforms|select1 .xf-value, .select1-value { 
+		background:url(icons/bullet_blue.png) no-repeat left top;
+}
+
+
+how to in xforms?
+.focused{
+  background:#FFFCDF url(img/bg_focus.png);
+  border:1px solid #EFE795; border-width:1px 0;
+  padding:6px 4px;
+}
+
+
+xforms|select1 input {
+	width:2em;
+}
+*/
+.repeat-index, .xf-repeat-index {
+	background:url(icons/pencil.png) no-repeat right top;
+}

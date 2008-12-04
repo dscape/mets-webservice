@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events" 
+            xmlns:xforms="http://www.w3.org/2002/xforms"
+            xmlns:xhtml="http://www.w3.org/1999/xhtml"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <xhtml:head>
+    <xhtml:title>GUI</xhtml:title>
+    <xforms:model>
+      <xforms:instance id="sip-instance">
+<mets>
+  <metsHdr ID="H1">
+    <agent ID="" ROLE="CREATOR" TYPE="INDIVIDUAL">
+      <name/>
+      <note/>
+    </agent>
+
+  </metsHdr>
+  <fileSec>
+    <fileGrp>
+      <file ID="" MIMETYPE="">
+        <FContent>
+          <binData xsi:type="xsd:base64Binary"/>
+        </FContent>
+      </file>
+
+    </fileGrp>
+  </fileSec>
+  <structMap>
+    <div TYPE="file:categories">
+      <div TYPE="file:categories:report">
+        <fptr FILEID=""/>
+      </div>
+      <div TYPE="file:categories:sourcecode">
+        <fptr FILEID=""/>
+      </div>
+      <div TYPE="file:categories:presentation">
+        <fptr FILEID=""/>
+      </div>
+      <div TYPE="file:categories:miscellaneous">
+        <fptr FILEID=""/>
+      </div>
+    </div>
+  </structMap>
+</mets>
+      </xforms:instance>
+     <xforms:schema src="mets.xsd"/>
+      
+      <!-- remove this lines to erase load bug. Using a schema will fix this -->
+      <xforms:bind nodeset="//@ID"
+                   constraint="string-length(.) &gt; 0"/> 
+      <!-- EOB: End of bug -->
+
+      <xforms:submission id="save" 
+                         action="file:///Volumes/Users/dscape/Workspace/datastore.xml" 
+                         replace="none"
+                         method="put"/>
+      <xforms:submission id="load"
+                         action="file:///Volumes/Users/dscape/Workspace/datastore.xml" 
+                         replace="instance"
+                         method="get"/>
+     <xforms:submission id="send"
+                        action="http://localhost:3000/mets" 
+                        method="post"/>
+
+    </xforms:model>
+    <xforms:model id="sections-model">
+      <xforms:instance src="sections.xml"
+                       id="sections-instance"/>
+    </xforms:model>
+    <xhtml:link href="style.css"
+                rel="stylesheet"/>
+  </xhtml:head>
+  <xhtml:body>
+    <xhtml:h1 align="center">USER GUI &lt;eg-pi-xforms-v0.3alpha&gt;</xhtml:h1>
+    
+    <xhtml:div class="form">
+      <xforms:group id="menu">
+        <xforms:trigger accesskey="A">
+          <xforms:label>
+            <xhtml:img src="icons/group.png"
+                       alt="Authors"/>
+            Authors
+          </xforms:label>
+          <xforms:toggle case="authors-case"
+                         ev:event="DOMActivate"/>
+        </xforms:trigger>
+        <xforms:trigger accesskey="F">
+          <xforms:label>
+            <xhtml:img src="icons/box.png"
+                       alt="Files"/>
+            Files
+          </xforms:label>
+          <xforms:toggle case="files-case"
+                         ev:event="DOMActivate"/>
+        </xforms:trigger>
+        <xforms:submit submission="send"
+                       class="submit"
+                       accesskey="T">
+          <xforms:label>
+            <xhtml:img src="icons/database_go.png"
+                       alt="Files"/>
+            Submit
+          </xforms:label>
+        </xforms:submit>
+        
+      </xforms:group>
+      <xforms:switch>
+        <xforms:case id="authors-case">
+
+          <xforms:group id="authors-group">
+            <!-- <xforms:label>Authors</xforms:label> -->
+            <xforms:repeat id="authors-repeat"
+                           nodeset="/mets/metsHdr/agent">
+              <xforms:group id="author-group" class="container">
+
+                <xforms:output value="concat(@ID, ' - ', name)"
+                               incremental="true"/>
+
+                <xforms:input ref="@ID"
+                              incremental="true">
+                  <xforms:label>Student ID</xforms:label>
+                </xforms:input>
+
+                <xforms:input ref="name"
+                              incremental="true">
+                  <xforms:label>Name</xforms:label>
+                </xforms:input>
+                <xforms:input ref="note">
+                  <xforms:label>Email</xforms:label>
+                </xforms:input>
+              </xforms:group>
+            </xforms:repeat>
+
+            <xforms:trigger>
+              <xforms:label>
+                <xhtml:img src="icons/user_add.png"
+                           alt="Add"/>
+                Add
+              </xforms:label>
+              <xforms:hint>Click here to add another author after the currently selected one.</xforms:hint>
+              <xforms:action ev:event="DOMActivate">
+                <xforms:insert at="index('authors-repeat')"
+                               nodeset="/mets/metsHdr/agent"
+                               position="after"/>
+                <xforms:setvalue ref="/mets/metsHdr/agent[index('authors-repeat')]/name"
+                                 value=""/>
+                <xforms:setvalue ref="/mets/metsHdr/agent[index('authors-repeat')]/@ID"
+                                 value=""/>
+                <xforms:setvalue ref="/mets/metsHdr/agent[index('authors-repeat')]/note"
+                                 value=""/>
+              </xforms:action>
+            </xforms:trigger>
+            <xforms:trigger ref="instance('sip-instance')[count(/mets/metsHdr/agent) > 1]">
+              <xforms:label>
+                <xhtml:img src="icons/user_delete.png"
+                           alt="Remove"/>
+                Remove
+              </xforms:label>
+              <xforms:hint>Click here to remove the currently selected author.</xforms:hint>
+              <xforms:delete at="index('authors-repeat')"
+                             ev:event="DOMActivate"
+                             nodeset="/mets/metsHdr/agent"/>
+            </xforms:trigger>
+          </xforms:group>
+        </xforms:case>
+        <xforms:case id="files-case">
+          
+          <xforms:group id="files-group">
+            <!-- <xforms:label>Files</xforms:label> -->
+            <xforms:repeat id="files-repeat"
+                           nodeset="/mets/fileSec/fileGrp/file">
+              <xforms:group id="file-group" class="container">
+                <xforms:output value="concat('Filename #', @ID)"/>
+                <xforms:select1  ref="mets/structMap/div/@ID" appearance="compact">
+                  <xforms:label>Section</xforms:label>
+                  <xforms:itemset model="sections-model"
+                                  nodeset="//section">
+                    <xforms:label ref="name"/>
+                    <xforms:value ref="id"/>
+                    <xforms:hint ref="description"/>
+                  </xforms:itemset>
+                </xforms:select1>
+                <xforms:upload ref="FContent/binData">
+                  <xforms:label>File</xforms:label>
+                  <xforms:filename ref="/mets/fileSec/fileGrp/file[index('files-repeat')]/@ID"/>
+                  <xforms:mediatype ref="/mets/fileSec/fileGrp/file[index('files-repeat')]/@MIMETYPE"/>
+                </xforms:upload>
+
+                <xhtml:p/>
+                
+              </xforms:group>
+            </xforms:repeat>
+            <xforms:trigger>
+              <xforms:label>
+                <xhtml:img src="icons/page_white_add.png"
+                           alt="Add"/>
+                Add
+              </xforms:label>
+              <xforms:hint>Click here to add another file after the currently selected one.</xforms:hint>
+              <xforms:action ev:event="DOMActivate">
+                <xforms:insert at="index('files-repeat')"
+                               nodeset="/mets/fileSec/fileGrp/file"
+                               position="after"/>
+                <xforms:setvalue ref="/mets/fileSec/fileGrp/file[index('files-repeat')]/@ID"
+                                 value=""/>
+              </xforms:action>
+            </xforms:trigger>
+            <xforms:trigger ref="instance('sip-instance')[count(/mets/fileSec/fileGrp/file) > 1]">
+              <xforms:label>
+                <xhtml:img src="icons/page_white_delete.png"
+                           alt="Remove"/>
+                Remove
+              </xforms:label>
+              <xforms:hint>Click here to remove the currently selected file.</xforms:hint>
+              <xforms:delete at="index('files-repeat')"
+                             ev:event="DOMActivate"
+                             nodeset="/mets/fileSec/fileGrp/file"/>
+            </xforms:trigger>
+          </xforms:group>
+        </xforms:case>
+      </xforms:switch>
+    </xhtml:div>
+    <xhtml:div class="footer">
+      <xforms:submit submission="save"
+                     accesskey="S">
+        <xforms:label>
+          <xhtml:img src="icons/disk.png"
+                     alt="Save"/>
+          Save Current State
+        </xforms:label>
+      </xforms:submit>
+      
+      <xforms:submit submission="load"
+                     accesskey="L">
+        <xforms:label>
+          <xhtml:img src="icons/arrow_refresh.png"
+                     alt="Load"/>
+          Load From File
+        </xforms:label>
+      </xforms:submit>
+    </xhtml:div>
+  </xhtml:body>
+</xhtml:html>
